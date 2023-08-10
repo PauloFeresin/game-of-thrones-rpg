@@ -1,26 +1,21 @@
-//importa o mongo
-const { MongoClient } = require("mongodb")
+const { MongoClient } = require('mongodb');
 
-const connMongoDB = async () => {
-    console.log("Entrou no func de conexão")
-    const url = "mongodb://localhost:27017";
-    const dbName = "got";
+async function connMongoDB() {
+    const uri = "mongodb+srv://pauloferesin:Smarters%402023@meucluster.mfvzhcx.mongodb.net/?retryWrites=true&w=majority";
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
 
     try {
-        const client = await MongoClient.connect(url, {
-            useUnifiedTopology: true,
-        });
-        const db = client.db(dbName);
-
-        return db;
+        // Connect the client to the Atlas cluster
+        await client.connect();
+        console.log("Connected to MongoDB Atlas!");
     } catch (error) {
-        console.error("Erro ao conectar ao mongodb:", error);
-        throw error;
+        console.error("Error connecting to MongoDB Atlas:", error);
+        throw error; // Rethrow the error to handle it outside
     }
 
+    return client;
 }
 
-
-module.exports = () => {
-    return connMongoDB
+module.exports = {
+    connMongoDB
 };
