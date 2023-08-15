@@ -1,6 +1,8 @@
 const { check, validationResult } = require("express-validator");
 const { connMongoDB } = require('D:/Paulo/Estudos/Javascript/game_of_throne_rpg/config/dbConnection.js'); // Adjust the path accordingly
 
+
+const JogoDAO = require("D:/Paulo/Estudos/Javascript/game_of_throne_rpg/app/models/jogoDAO.js")
 const UsuariosDAO = require('D:/Paulo/Estudos/Javascript/game_of_throne_rpg/app/models/usuariosDAO.js');
 
 module.exports.cadastro = (application, req, res) => {
@@ -31,8 +33,12 @@ module.exports.cadastrar = async (application, req, res) => {
         } else {
             const connection = await connMongoDB();
             const usuariosDAO = new UsuariosDAO(connection);
+            const jogoDAO = new JogoDAO(connection);
+
 
             await usuariosDAO.inserirUsuario(dadosForm);
+            await jogoDAO.gerarParametros(dadosForm.usuario);
+
             res.send("Podemos cadastrar");
         }
     } catch (error) {

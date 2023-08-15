@@ -1,10 +1,29 @@
-<div id="pergaminhos">					
+<div id="pergaminhos">
 	<h3>Pergaminhos</h3>
-	
+
 	<ul>
-		<li>1 enforcamento(s) programado - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>
-		<li>2 aldeão(ões) em treinamento de magia - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>
-		<li>1 aldeão(ões) em treinamento de história - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>
-		<li>5 aldeão(ões) coletando recursos - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>
+		<% for (let i = 0; i < acoes.length; i++) { %>
+			<li>
+				<% let txt_acao = ""; 
+				switch (parseInt(acoes[i].acao)) {
+					case 1: txt_acao = "Aledões coletando recursos"; break;
+					case 2: txt_acao = "Enfocamento programado"; break;
+					case 3: txt_acao = "Ensinando historia"; break;
+					case 4: txt_acao = "Treinando magia"; break;
+				} 
+				let date = new Date();
+				let momento_atual = date.getTime();
+				let segundos_restantes = Math.round((acoes[i].acao_termina_em - momento_atual) / 1000);
+				%>
+				<%= acoes[i].quantidade %>
+				<%= txt_acao %>
+	
+				<small>restam <span class="tempo_restante"><%=segundos_restantes%></span> segundos
+					- <a href="/revogar_acao?id_acao=<%=acoes[i]._id %>">revogar ordem</a>
+				  </small>
+			</li>	
+		<% } %>
 	</ul>
+	
+
 </div>
