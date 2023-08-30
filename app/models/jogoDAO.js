@@ -23,7 +23,7 @@ JogoDAO.prototype.gerarParametros = async function (usuario) {
       comercio: Math.floor(Math.random() * 1000),
       magia: Math.floor(Math.random() * 1000),
     });
-    console.log("Usuario inserted successfully:", result.ops[0]);
+    console.log("Usuario inserted successfully:");
   } catch (error) {
     console.error("Error inserting usuario:", error);
   }
